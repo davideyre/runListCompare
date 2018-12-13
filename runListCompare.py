@@ -114,7 +114,7 @@ f.close()
 #generate alignment
 pypy_stem = ''
 if not use_pypy:
-	pypy_stem = 'python /users/bag/deyre/bin/'
+	pypy_stem = 'python /home/nick/soft/runListCompare/'
 
 
 sys.stdout.write('\nGenerate all vs all alignment using %s cores\n'%nprocs)
@@ -130,7 +130,7 @@ sys.stdout.flush()
 call(cmd.split())
 
 sys.stdout.write('\nGenerate all vs all distance matrix %s cores\n'%nprocs)
-cmd = 'getDist.py -p %s %s/align_snps.fa %s/align-compare'%(nprocs, output_stem, output_stem)
+cmd = '%sgetDist.py -p %s %s/align_snps.fa %s/align-compare'%(pypy_stem, nprocs, output_stem, output_stem)
 sys.stdout.write(cmd+'\n')
 sys.stdout.flush()
 call(cmd.split())
@@ -161,22 +161,22 @@ def run_cluster(maskfile, cluster_snp, exclude, output_stem, nprocs, refpath, se
 	else:
 		r = '-r %s'%exclude
 	
-	cmd = 'clusterCreator.py -s %s %s %s/initial_nodes.txt %s/align-compare.txt %s/clusters.txt'%(cluster_snp, r, output_stem, output_stem, output_stem)
+	cmd = '%sclusterCreator.py -s %s %s %s/initial_nodes.txt %s/align-compare.txt %s/clusters.txt'%(pypy_stem, cluster_snp, r, output_stem, output_stem, output_stem)
 	call(cmd.split())
 	
 	## clean cluster directories
 	cmd = 'rm -f %s/cluster/*'%output_stem
 	call(cmd, shell=True)
-	
+
 	cmd = 'rm -f %s/cluster_ml/*'%output_stem
 	call(cmd, shell=True)
 	
 	
 	## run cluster alignment and cleaning
 	if maskfile:
-		cmd = 'getClusterAlign.py -p %s -s %s -v %s -n %s -m %s %s/clean_seqlist.txt %s/clusters.txt %s %s'%(nprocs, seq_keep, varsite_keep, align_n, maskfile, output_stem, output_stem, refpath, output_stem)
+		cmd = '%sgetClusterAlign.py -p %s -s %s -v %s -n %s -m %s %s/clean_seqlist.txt %s/clusters.txt %s %s'%(pypy_stem, nprocs, seq_keep, varsite_keep, align_n, maskfile, output_stem, output_stem, refpath, output_stem)
 	else:
-		cmd = 'getClusterAlign.py -p %s -s %s -v %s -n %s %s/clean_seqlist.txt %s/clusters.txt %s %s'%(nprocs, seq_keep, varsite_keep, align_n, output_stem, output_stem, refpath, output_stem)
+		cmd = '%sgetClusterAlign.py -p %s -s %s -v %s -n %s %s/clean_seqlist.txt %s/clusters.txt %s %s'%(pypy_stem, nprocs, seq_keep, varsite_keep, align_n, output_stem, output_stem, refpath, output_stem)
 	sys.stdout.write(cmd+'\n')
 	sys.stdout.flush()
 	call(cmd.split())
@@ -247,7 +247,7 @@ tree = ''
 if draw_cf: tree = '-c '
 iqtree = ''
 if use_iqtree: iqtree = '-q '
-cmd = 'getClusterML.py %s%s-p %s -r %s %s %s'%(tree, iqtree, nprocs, round_dp, refpath, output_stem)
+cmd = '%sgetClusterML.py %s%s-p %s -r %s %s %s'%(pypy_stem, tree, iqtree, nprocs, round_dp, refpath, output_stem)
 sys.stdout.write(cmd+'\n')
 sys.stdout.flush()
 call(cmd, shell=True)

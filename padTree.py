@@ -16,6 +16,7 @@ from Bio.Alphabet import generic_dna
 from Bio.SeqRecord import SeqRecord
 import os, sys, re
 import subprocess, shlex
+import gzip
 
 usage = '''
 Dependencies - Fasta2Phylip.pl, phyml, ClonalFrameML in bin
@@ -78,7 +79,7 @@ if __name__=="__main__":
 	# read in reference
 	if os.path.exists(ref_file):
 		#refseq = SeqIO.read( ref_file, "fasta" )
-		fa = SeqIO.parse( ref_file, "fasta" )
+		fa = SeqIO.parse( gzip.open(ref_file, 'rt'), "fasta" )
 		fa_seq = Seq("".join([s.seq._data for s in fa]), generic_dna)
 		fa_id = "ref"
 		refseq = SeqRecord(fa_seq, id=fa_id)
@@ -155,6 +156,7 @@ if __name__=="__main__":
 		SeqIO.write(seqlist, out_fa, 'fasta')
 		sys.stdout.write('Fasta file written\n')
 		sys.stdout.flush()
+                print(seqlist)
 		SeqIO.write(seqlist, out_phy, 'phylip')
 		sys.stdout.write('Phylip file written\n')
 		sys.stdout.flush()

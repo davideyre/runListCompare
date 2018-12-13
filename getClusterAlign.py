@@ -103,15 +103,15 @@ if __name__=='__main__':
 		clusterVar = '%s/cluster/cluster_%s'%(output_stem, c)
 		#make alignment
 		if maskfile:
-			cmd = 'getAlignment.py -m %s %s %s %s'%(maskfile, clusterListOut, refpath, clusterVar)
+			cmd = '/home/nick/soft/runListCompare/getAlignment.py -m %s %s %s %s'%(maskfile, clusterListOut, refpath, clusterVar)
 		else:
 			sys.stdout.write('Proceeding without mask file\n')
-			cmd = 'getAlignment.py %s %s %s'%(clusterListOut, refpath, clusterVar)
+			cmd = '/home/nick/soft/runListCompare/getAlignment.py %s %s %s'%(clusterListOut, refpath, clusterVar)
 		sys.stdout.write('%s\n'%cmd)
 		sys.stdout.flush()
 		call(cmd.split())
 		#clean alignment
-		cmd = 'cleanAlignment.py -v %s -s %s -n %s %s'%(varsite_keep, seq_keep, align_n, clusterVar)
+		cmd = '/home/nick/soft/runListCompare/cleanAlignment.py -v %s -s %s -n %s %s'%(varsite_keep, seq_keep, align_n, clusterVar)
 		call(cmd.split())
 	
 	# do get AC for particular modulus and cluster list

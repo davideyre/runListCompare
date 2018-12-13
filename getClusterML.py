@@ -78,14 +78,14 @@ if __name__=='__main__':
 		if draw_cf: tree = 'c'
 		iqtree = ''
 		if use_iqtree: iqtree = ' -q'
-		cmd = 'padTree.py -%s%s -d -r %s %s %s_clean_positions.txt %s_clean_snps.fa %s'%(tree, iqtree, round_dp, ref_file, inStem, inStem, outStem)
+		cmd = '/home/nick/soft/runListCompare/padTree.py -%s%s -d -r %s %s %s_clean_positions.txt %s_clean_snps.fa %s'%(tree, iqtree, round_dp, ref_file, inStem, inStem, outStem)
 		sys.stdout.write(cmd+'\n')
 		sys.stdout.flush()
 		call(cmd.split())
 		
 		if draw_cf:
 			#generate alignment with recombination removed
-			cmd = 'removeRecombination.py -c %s %s'%(c, input_stem)
+			cmd = '/home/nick/soft/runListCompare/removeRecombination.py -c %s %s'%(c, input_stem)
 			sys.stdout.write(cmd+'\n')
 			sys.stdout.flush()
 			call(cmd.split())
